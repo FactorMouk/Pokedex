@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PokelistRoutingModule } from './pokelist-routing.module';
+import { MaterialModule } from './../material.module';
 
 import { ListComponent } from './pages/list/list.component';
 
@@ -8,7 +9,8 @@ import { ListComponent } from './pages/list/list.component';
   declarations: [ListComponent],
   imports: [
     CommonModule,
-    PokelistRoutingModule
+    PokelistRoutingModule,
+    MaterialModule
   ]
 })
 export class PokelistModule { }
