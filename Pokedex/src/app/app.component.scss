@@ -1,0 +1,20 @@
+.container {
+    .mat-toolbar {
+        height: 80px;
+        display: grid;
+        grid-template-columns: 200px 3fr 1fr;
+        h3 {
+            font-size: 40px;
+        }
+        .nav-buttons {
+            display: flex;
+            width: 500px;
+            button {
+                margin: 10px;
+            }
+        }
+        .version {
+            text-align: end;
+        }
+    }
+}
