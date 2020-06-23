@@ -19,7 +19,7 @@
     .data-container {
         grid-column: 2 / span 1;
         display: grid;
-        grid-template-rows: 1fr 1fr;
+        grid-template-rows: 100px 1fr;
         grid-template-columns: 1fr 1fr;
         span {
             margin: 10px;
@@ -35,5 +35,23 @@
         padding: 10px;
         display: flex;
         align-items: center;
+        justify-content: center;
+        span {
+            .pokemon-types {
+                display: flex;
+                justify-content: space-evenly;
+                div {
+                    width: 70px;
+                    height: 25px;
+                    margin: 2px;
+                    text-align: center;
+                    color: white;
+                    border-radius: 5px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+        }
     }
 }

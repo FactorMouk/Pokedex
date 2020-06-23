@@ -1,7 +1,7 @@
 .content {
     margin-top: 80px;
     .pokelist {
-        padding: 40px 200px;
+        padding: 65px 200px;
         mat-grid-list {
             mat-grid-tile {
                 mat-card {
@@ -13,8 +13,36 @@
                     justify-content: center;
                     align-items: center;
                     cursor: pointer;
-                    img {
-                        width: 190px;
+                    .pokemon-image {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        img {
+                            width: 140px;
+                        }
+                    }
+                    mat-card-header {
+                        justify-content: center;
+                        mat-card-subtitle {
+                            text-align: center;
+                        }
+                    }
+                    mat-card-content {
+                        .pokemon-types {
+                            display: flex;
+                            justify-content: space-evenly;
+                            div {
+                                width: 70px;
+                                height: 25px;
+                                margin: 2px;
+                                text-align: center;
+                                color: white;
+                                border-radius: 5px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            }
+                        }
                     }
                 }
             }
