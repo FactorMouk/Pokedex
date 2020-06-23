@@ -1,0 +1,29 @@
+<div class="content">
+    <h2>{{ pokemonData.name | titlecase }} - Nº{{ pokemonData.id }}</h2>
+    <div class="img-container">
+        <img src="{{ pokemonData.img }}">
+    </div>
+    <div class="data-container">
+        <span>
+            <h3><b>Height</b></h3>
+            <p>{{ pokemonData.height }}</p>
+        </span>
+        <span>
+            <h3><b>Weight</b></h3>
+            <p>{{ pokemonData.weight }}</p>
+        </span>
+        <span class="abilities-container">
+            <h3><b>Abilities</b></h3>
+            <p>{{ pokemonData.abilities }}</p>
+        </span>
+    </div>
+    <div>
+        <canvas #statsChart width="200" height="200"></canvas>
+    </div>
+    <div class="types-container">
+        <span>
+            <h3><b>Types</b></h3>
+            <p>{{ pokemonData.types }}</p>
+        </span>
+    </div>
+</div>

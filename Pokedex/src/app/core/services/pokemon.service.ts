@@ -14,7 +14,7 @@ export class PokemonService {
   }
 
   getPokemon(id) {
-    return this.http.get(apiUrl.baseUrl + 'pokemon/' + id)
+    return this.http.get(apiUrl.baseUrl + 'pokemon/' + id);
   }
 
 }

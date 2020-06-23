@@ -1,0 +1,39 @@
+.content {
+    width: 450px;
+    display: grid;
+    grid-template-rows: 50px 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    h2 {
+        grid-column: 1 / span 2;
+        text-align: center;
+    }
+    .img-container {
+        grid-column: 1 / span 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+            width: 200px;
+        }
+    }
+    .data-container {
+        grid-column: 2 / span 1;
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+        span {
+            margin: 10px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #d2d1d1;
+        }
+        .abilities-container {
+            grid-column: 1 / span 2;
+        }
+    }
+    .types-container {
+        padding: 10px;
+        display: flex;
+        align-items: center;
+    }
+}
