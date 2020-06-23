@@ -19,9 +19,14 @@ export class ListComponent implements OnInit {
   currentOffset = 0;
   pokemonsLoaded = 0;
 
+  columns;
+
+  pokemonDetailsModal;
+
   constructor(private pokemonService: PokemonService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.defineColumns();
     this.getPokemons('offset=0&limit=0');
   }
 
@@ -88,16 +93,25 @@ export class ListComponent implements OnInit {
   }
 
   openPokemonDetails(pokemon) {
-    const dialogRef = this.dialog.open(PokemonDetailsComponent,
+    this.pokemonDetailsModal = this.dialog.open(PokemonDetailsComponent,
       {
         data: {
           pokemon: pokemon
         }
       }
     );
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+  }
+
+  defineColumns() {
+    if (window.innerWidth <= 400) {
+      this.columns = 1;
+    } else if (window.innerWidth <= 600) {
+      this.columns = 2;
+    } else if (window.innerWidth <= 900) {
+      this.columns = 3;
+    } else if (window.innerWidth > 900) {
+      this.columns = 4;
+    }
   }
 
 }

@@ -2,10 +2,44 @@
     <mat-toolbar>
         <h3>Pokédex</h3>
         <div class="nav-buttons">
-            <button mat-stroked-button routerLink="/pokelist" routerLinkActive="nav-button-selected">Pokémons</button>
-            <button mat-stroked-button routerLink="/pokestatistics" routerLinkActive="nav-button-selected">Estatísticas</button>
+            <button mat-stroked-button routerLink="/pokelist" routerLinkActive="nav-button-selected">
+                <img src="./../assets/icons/pokemon.png">
+                Pokémons
+            </button>
+            <button mat-stroked-button routerLink="/pokestatistics" routerLinkActive="nav-button-selected">
+                <img src="./../assets/icons/statistics.png">
+                Estatísticas
+            </button>
         </div>
-        <span class="version">Versão 0.0.1</span>
+        <span class="version">Versão 0.3.0</span>
+        <div class="menu-button-container">
+            <button class="toggle-button" mat-icon-button (click)="snav.toggle(); closeModals();">
+                <mat-icon>menu</mat-icon>
+            </button>
+        </div>
     </mat-toolbar>
-    <router-outlet></router-outlet>
+    <mat-sidenav-container>
+        <mat-sidenav #snav fixedInViewport="true">
+            <div class="sidenav">
+                <div class="sidenav-buttons">
+                    <button mat-stroked-button routerLink="/pokelist" routerLinkActive="nav-button-selected">
+                        <img src="./../assets/icons/pokemon.png">
+                        Pokémons
+                    </button>
+                    <button mat-stroked-button routerLink="/pokestatistics" routerLinkActive="nav-button-selected">
+                        <img src="./../assets/icons/statistics.png">
+                        Estatísticas
+                    </button>
+                </div>
+                <span class="version">Versão 0.3.0</span>
+            </div>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <router-outlet></router-outlet>
+            <footer>
+                <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+                <div>&copy; Copyright 2020 - João Vitor Oliveira</div>
+            </footer>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
 </div>

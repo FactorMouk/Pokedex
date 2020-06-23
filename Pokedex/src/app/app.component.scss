@@ -12,9 +12,14 @@
         }
         .nav-buttons {
             display: flex;
-            width: 500px;
+            width: 450px;
             button {
                 margin: 10px;
+                padding: 5px 10px;
+                img {
+                    width: 40px;
+                    margin-right: 10px;
+                }
             }
             .nav-button-selected {
                 background-color: #e4e3e3;
@@ -22,6 +27,82 @@
         }
         .version {
             text-align: end;
+        }
+        .menu-button-container {
+            display: none;
+        }
+    }
+    mat-sidenav-container {
+        mat-sidenav-content {
+            display: flex;
+            height: 100vh;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        footer {
+            padding: 40px;
+            background-color: #cccccc;
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    .container {
+        .mat-toolbar {
+            grid-template-columns: 1fr 1fr;
+            .nav-buttons {
+                display: none;
+            }
+            .version {
+                display: none;
+            }
+            .menu-button-container {
+                display: flex;
+                justify-content: flex-end;
+            }
+        }
+        mat-sidenav-container {
+            mat-sidenav {
+                .sidenav {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    margin-top: 80px;
+                    .sidenav-buttons {
+                        display: flex;
+                        flex-direction: column;
+                        padding: 50px 25px;
+                        button {
+                            margin: 20px 0px;
+                            padding: 10px;
+                            img {
+                                width: 40px;
+                                margin-right: 10px;
+                            }
+                        }
+                        .nav-button-selected {
+                            background-color: #e4e3e3;
+                        }
+                    }
+                    .version {
+                        font-size: 15px;
+                        position: absolute;
+                        bottom: 45px;
+                    }
+                }
+            }
+            footer {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                div {
+                    text-align: center;
+                    margin: 5px;
+                }
+            }
         }
     }
 }

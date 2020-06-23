@@ -58,3 +58,33 @@
         }
     }
 }
+
+@media(max-width: 1400px) {
+    .content {
+        .pokelist {
+            padding: 65px 50px;
+        }
+    }
+}
+
+@media (max-width: 1000px) {
+    .content {
+        .pokelist {
+            mat-grid-list {
+                mat-grid-tile {
+                    mat-card {
+                        margin: 5px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 700px) {
+    .content {
+        .pokelist {
+            padding: 65px 20px;
+        }
+    }
+}

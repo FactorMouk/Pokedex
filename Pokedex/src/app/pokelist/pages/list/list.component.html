@@ -1,6 +1,6 @@
 <div class="content">
     <div class="pokelist">
-        <mat-grid-list cols="4" rowHeight="300px" gutterSize="10px">
+        <mat-grid-list [cols]="columns" rowHeight="300px" gutterSize="10px" (window:resize)="defineColumns()">
             <mat-grid-tile *ngFor="let pokemon of pokemons">
                 <mat-card (click)="pokemon.loaded ? openPokemonDetails(pokemon.pokemonData) : null">
                     <div *ngIf="pokemon.loaded">

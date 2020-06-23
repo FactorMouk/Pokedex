@@ -19,3 +19,40 @@
         }
     }
 }
+
+@media(max-width: 1200px) {
+    .content {
+        padding: 40px 20px;
+        div {
+            .chart {
+                width: 400px;
+            }
+        }
+    }
+}
+
+@media(max-width: 950px) {
+    .content {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        div {
+            .types {
+                align-self: center;
+            }
+            .regions {
+                align-self: center;
+            }
+        }
+    }
+}
+
+@media(max-width: 500px) {
+    .content {
+        padding: 40px 0px;
+        div {
+            .chart {
+                width: 260px;
+            }
+        }
+    }
+}
