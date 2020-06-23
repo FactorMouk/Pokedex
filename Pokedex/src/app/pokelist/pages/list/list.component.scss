@@ -1,6 +1,31 @@
 .content {
-    margin: 10px;
+    margin-top: 80px;
     .pokelist {
-        padding: 40px;
+        padding: 40px 200px;
+        mat-grid-list {
+            mat-grid-tile {
+                mat-card {
+                    width: 200px;
+                    height: 250px;
+                    margin: 20px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    img {
+                        width: 190px;
+                    }
+                }
+            }
+        }
+        .pagination-buttons {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            button {
+                min-width: 90px;
+                margin: 20px;
+            }
+        }
     }
 }

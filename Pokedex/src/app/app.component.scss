@@ -1,8 +1,12 @@
 .container {
     .mat-toolbar {
+        position: fixed;
+        top: 0;
+        z-index: 9999;
         height: 80px;
         display: grid;
         grid-template-columns: 200px 3fr 1fr;
+        box-shadow: 1px 1px 3px 1px grey;
         h3 {
             font-size: 40px;
         }
