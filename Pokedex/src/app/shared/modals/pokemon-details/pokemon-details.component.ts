@@ -18,7 +18,6 @@ export class PokemonDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.pokemonData = this.data.pokemon;
-    console.log(this.pokemonData)
   }
 
   ngAfterViewInit() {
@@ -26,7 +25,6 @@ export class PokemonDetailsComponent implements OnInit {
   }
 
   createStatsChart() {
-    console.log(this.chartRef.nativeElement)
     this.chart = new Chart(this.chartRef.nativeElement, {
       type: 'bar',
       data: {

@@ -1,0 +1,21 @@
+.content {
+    margin-top: 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 40px 80px;
+    div {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        .chart {
+            width: 450px;
+            margin: 25px;
+        }
+        .types {
+            align-self: flex-end;
+        }
+        .regions {
+            align-self: flex-start;
+        }
+    }
+}

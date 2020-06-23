@@ -17,4 +17,12 @@ export class PokemonService {
     return this.http.get(apiUrl.baseUrl + 'pokemon/' + id);
   }
 
+  getTypes() {
+    return this.http.get(apiUrl.baseUrl + 'type');
+  }
+
+  getPokemonsPerType(id) {
+    return this.http.get(apiUrl.baseUrl + 'type/' + id);
+  }
+
 }
