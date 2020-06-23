@@ -3,11 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const apiUrl = {
-  baseUrl: 'https://pokeapi.co/api/v2/'
+  baseUrl: 'https://pokeapi.co/api/v2/',
 };
 
 export const environment = {
-  production: false
+  production: false,
 };
 
 /*

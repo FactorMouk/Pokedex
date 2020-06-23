@@ -1,4 +1,4 @@
-<div class="content">
+<div class="content" *ngIf="pokemonData">
     <h2>{{ pokemonData.name | titlecase }} - Nº{{ pokemonData.id }}</h2>
     <div class="img-container">
         <img src="{{ pokemonData.img }}">

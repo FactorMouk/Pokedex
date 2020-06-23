@@ -19,7 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatProgressSpinnerModule,
     MatDialogModule,
     MatSidenavModule,
-    MatIconModule
-  ]
+    MatIconModule,
+  ],
 })
-export class MaterialModule { }
+export class MaterialModule {}

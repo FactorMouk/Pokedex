@@ -3,11 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { apiUrl } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PokemonService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getPokemons(pagination) {
     return this.http.get(apiUrl.baseUrl + 'pokemon?' + pagination);
@@ -24,5 +23,4 @@ export class PokemonService {
   getPokemonsPerType(id) {
     return this.http.get(apiUrl.baseUrl + 'type/' + id);
   }
-
 }

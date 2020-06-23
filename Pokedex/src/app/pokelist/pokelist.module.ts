@@ -8,11 +8,6 @@ import { ListComponent } from './pages/list/list.component';
 
 @NgModule({
   declarations: [ListComponent],
-  imports: [
-    CommonModule,
-    PokelistRoutingModule,
-    MaterialModule,
-    SharedModule
-  ]
+  imports: [CommonModule, PokelistRoutingModule, MaterialModule, SharedModule],
 })
-export class PokelistModule { }
+export class PokelistModule {}

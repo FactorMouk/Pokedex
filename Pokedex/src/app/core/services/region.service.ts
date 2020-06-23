@@ -3,11 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { apiUrl } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RegionService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getRegions() {
     return this.http.get(apiUrl.baseUrl + 'region');
@@ -16,5 +15,4 @@ export class RegionService {
   getRegion(id) {
     return this.http.get(apiUrl.baseUrl + 'region/' + id);
   }
-
 }

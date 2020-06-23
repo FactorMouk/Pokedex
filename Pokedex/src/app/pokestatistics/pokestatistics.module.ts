@@ -5,9 +5,6 @@ import { StatisticsComponent } from './pages/statistics/statistics.component';
 
 @NgModule({
   declarations: [StatisticsComponent],
-  imports: [
-    CommonModule,
-    PokestatisticsRoutingModule
-  ]
+  imports: [CommonModule, PokestatisticsRoutingModule],
 })
-export class PokestatisticsModule { }
+export class PokestatisticsModule {}

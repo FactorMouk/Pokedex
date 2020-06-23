@@ -1,4 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { ListComponent } from './list.component';
 
@@ -8,9 +10,9 @@ describe('ListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ListComponent ]
-    })
-    .compileComponents();
+      imports: [HttpClientTestingModule, MatDialogModule],
+      declarations: [ListComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
