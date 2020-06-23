@@ -2,11 +2,11 @@
     <mat-toolbar>
         <h3>Pokédex</h3>
         <div class="nav-buttons">
-            <button mat-stroked-button routerLink="/pokelist" routerLinkActive="nav-button-selected">
+            <button mat-stroked-button routerLink="/pokelist" routerLinkActive="nav-button-selected" (click)="closeModals();">
                 <img src="./../assets/icons/pokemon.png">
                 Pokémons
             </button>
-            <button mat-stroked-button routerLink="/pokestatistics" routerLinkActive="nav-button-selected">
+            <button mat-stroked-button routerLink="/pokestatistics" routerLinkActive="nav-button-selected" (click)="closeModals();">
                 <img src="./../assets/icons/statistics.png">
                 Estatísticas
             </button>
