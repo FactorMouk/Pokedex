@@ -17,15 +17,14 @@ export class PokemonDetailsComponent implements OnInit {
     this.pokemonData = this.data.pokemon;
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   ngAfterViewInit() {
     this.createStatsChart();
   }
 
   createStatsChart() {
-    if(this.statsRef) {
+    if (this.statsRef) {
       this.chart = new Chart(this.statsRef.nativeElement, {
         type: 'bar',
         data: {

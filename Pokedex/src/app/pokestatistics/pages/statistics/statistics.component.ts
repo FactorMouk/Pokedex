@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js';
+import { Subscription } from 'rxjs';
 
 import { PokemonService } from './../../../core/services/pokemon.service';
 import { RegionService } from './../../../core/services/region.service';
@@ -32,19 +33,37 @@ export class StatisticsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    document.querySelector('mat-sidenav-content').scrollTop = 0;
     this.getTypes();
     this.getRegions();
   }
 
+  ngOnDetroy(): void {
+    if (this.paginationTypesSubscribe) {
+      this.paginationTypesSubscribe.unsubscribe();
+    }
+    if (this.typesSubscribe) {
+      this.typesSubscribe.unsubscribe();
+    }
+    if (this.paginationRegionsSubscribe) {
+      this.paginationRegionsSubscribe.unsubscribe();
+    }
+    if (this.regionsSubscribe) {
+      this.regionsSubscribe.unsubscribe();
+    }
+  }
+
+  paginationTypesSubscribe: Subscription;
+  typesSubscribe: Subscription;
   getTypes() {
-    this.pokemonService.getTypes().subscribe(
+    this.paginationTypesSubscribe = this.pokemonService.getTypes().subscribe(
       (types: any) => {
         for (let i = 0; i < types.results.length; i++) {
           this.types.push({
             name: types.results[i].name,
             amount: 0,
           });
-          this.pokemonService
+          this.typesSubscribe = this.pokemonService
             .getPokemonsPerType(
               types.results[i].url.substring(
                 'https://pokeapi.co/api/v2/type/'.length
@@ -67,36 +86,39 @@ export class StatisticsComponent implements OnInit {
     );
   }
 
+  paginationRegionsSubscribe: Subscription;
+  regionsSubscribe: Subscription;
   getRegions() {
-    this.regionService.getRegions().subscribe((regions: any) => {
-      for (let i = 0; i < regions.results.length; i++) {
-        this.regions.push({
-          name: regions.results[i].name,
-          locationsAmount: 0,
-        });
-        this.regionService
-          .getRegion(
-            regions.results[i].url.substring(
-              'https://pokeapi.co/api/v2/region/'.length
-            )
-          )
-          .subscribe((regionData: any) => {
-            this.regionsLoaded++;
-            this.regions[i].locationsAmount = regionData.locations.length;
-            if (this.regionsLoaded === this.regions.length) {
-              this.regions.forEach((region: any) => {
-                this.regionsName.push(region.name);
-                this.locationsPerRegionAmount.push(region.locationsAmount);
-              });
-              this.createRegionsChart();
-            }
+    this.paginationRegionsSubscribe = this.regionService
+      .getRegions()
+      .subscribe((regions: any) => {
+        for (let i = 0; i < regions.results.length; i++) {
+          this.regions.push({
+            name: regions.results[i].name,
+            locationsAmount: 0,
           });
-      }
-    });
+          this.regionsSubscribe = this.regionService
+            .getRegion(
+              regions.results[i].url.substring(
+                'https://pokeapi.co/api/v2/region/'.length
+              )
+            )
+            .subscribe((regionData: any) => {
+              this.regionsLoaded++;
+              this.regions[i].locationsAmount = regionData.locations.length;
+              if (this.regionsLoaded === this.regions.length) {
+                this.regions.forEach((region: any) => {
+                  this.regionsName.push(region.name);
+                  this.locationsPerRegionAmount.push(region.locationsAmount);
+                });
+                this.createRegionsChart();
+              }
+            });
+        }
+      });
   }
 
   createTypesChart() {
-    console.log(this.typesAmount);
     this.typesChartCanvas = new Chart(this.typesChartRef.nativeElement, {
       type: 'bar',
       data: {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 
 import { PokemonDetailsComponent } from './../../../shared/modals/pokemon-details/pokemon-details.component';
 
@@ -14,7 +15,7 @@ import { PokemonModel } from '../../../core/models/pokemon-model';
   styleUrls: ['./list.component.scss'],
 })
 export class ListComponent implements OnInit {
-  pokedex : PaginationModel;
+  pokedex: PaginationModel;
   pokemons;
   currentOffset = 0;
   pokemonsLoaded = 0;
@@ -29,10 +30,22 @@ export class ListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     this.defineColumns();
     this.getPokemons('offset=0&limit=0');
   }
 
+  ngOnDetroy(): void {
+    if (this.paginationSubscribe) {
+      this.paginationSubscribe.unsubscribe();
+    }
+    if (this.pokemonSubscribe) {
+      this.pokemonSubscribe.unsubscribe();
+    }
+  }
+
+  paginationSubscribe: Subscription;
+  pokemonSubscribe: Subscription;
   getPokemons(pagination: string) {
     this.pokedex = null;
     this.pokemons = [];
@@ -40,54 +53,59 @@ export class ListComponent implements OnInit {
     for (let i = 0; i < 20; i++) {
       this.pokemons.push({ loaded: false });
     }
-    this.pokemonService.getPokemons(pagination).subscribe(
-      (pokedex: any) => {
-        this.pokedex = pokedex;
-        this.pokedex.results.forEach((pokemon: any) => {
-          this.pokemonService
-            .getPokemon(
-              pokemon.url.substring('https://pokeapi.co/api/v2/pokemon/'.length)
-            )
-            .subscribe((pokemonData: any) => {
-              //Definindo os tipos do Pokémon
-              const types = [];
-              pokemonData.types.forEach((typeData) => {
-                types.push(typeData.type.name);
+    this.paginationSubscribe = this.pokemonService
+      .getPokemons(pagination)
+      .subscribe(
+        (pokedex: any) => {
+          this.pokedex = pokedex;
+          this.pokedex.results.forEach((pokemon: any) => {
+            this.pokemonSubscribe = this.pokemonService
+              .getPokemon(
+                pokemon.url.substring(
+                  'https://pokeapi.co/api/v2/pokemon/'.length
+                )
+              )
+              .subscribe((pokemonData: any) => {
+                //Definindo os tipos do Pokémon
+                const types = [];
+                pokemonData.types.forEach((typeData) => {
+                  types.push(typeData.type.name);
+                });
+                //Definindo os stats do Pokémon
+                const stats = [];
+                pokemonData.stats.forEach((statData) => {
+                  stats.push(statData.base_stat);
+                });
+                //Definindo as habilidades do Pokémon
+                const abilities = [];
+                pokemonData.abilities.forEach((abilityData) => {
+                  abilities.push(abilityData.ability.name);
+                });
+                this.pokemons[
+                  pokemonData.id - (1 + this.currentOffset)
+                ].pokemonData = new PokemonModel(
+                  pokemonData.id,
+                  pokemonData.name,
+                  pokemonData.sprites.front_default,
+                  types,
+                  pokemonData.height,
+                  pokemonData.weight,
+                  stats,
+                  abilities
+                );
+                this.pokemons[
+                  pokemonData.id - (1 + this.currentOffset)
+                ].loaded = true;
+                this.pokemonsLoaded++;
               });
-              //Definindo os stats do Pokémon
-              const stats = [];
-              pokemonData.stats.forEach((statData) => {
-                stats.push(statData.base_stat);
-              });
-              //Definindo as habilidades do Pokémon
-              const abilities = [];
-              pokemonData.abilities.forEach((abilityData) => {
-                abilities.push(abilityData.ability.name);
-              });
-              this.pokemons[
-                pokemonData.id - (1 + this.currentOffset)
-              ].pokemonData = new PokemonModel(
-                pokemonData.id,
-                pokemonData.name,
-                pokemonData.sprites.front_default,
-                types,
-                pokemonData.height,
-                pokemonData.weight,
-                stats,
-                abilities
-              );
-              this.pokemons[
-                pokemonData.id - (1 + this.currentOffset)
-              ].loaded = true;
-              this.pokemonsLoaded++;
-            });
-        });
-      },
-      (error) => console.log(error)
-    );
+          });
+        },
+        (error) => console.log(error)
+      );
   }
 
   changePage(type: string) {
+    document.querySelector('mat-sidenav-content').scrollTop = 0;
     let url;
     if (type === 'previous') {
       url = this.pokedex.previous;
