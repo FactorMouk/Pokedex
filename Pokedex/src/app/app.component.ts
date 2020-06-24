@@ -8,7 +8,23 @@ import { MatDialog } from '@angular/material/dialog'; // Biblioteca do elemento 
 })
 export class AppComponent {
   constructor(private dialogRef: MatDialog) {
-    screen.orientation.lock('portrait');
+    // Verificando se o device do usuário é mobile
+    if (
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      )
+    ) {
+      this.lockingScreen();
+    }
+  }
+
+  // Bloqueando tela em modo retrado
+  async lockingScreen() {
+    try {
+      await screen.orientation.lock('portrait');
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   // Método para fechamento de todos os possíveis dialogs (modais) abertos
