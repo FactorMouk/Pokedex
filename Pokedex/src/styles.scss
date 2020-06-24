@@ -2,104 +2,104 @@
 
 html,
 body {
-    scroll-behavior: smooth;
-    height: 100%;
-    overflow: auto;
+  scroll-behavior: smooth;
+  height: 100%;
+  overflow: auto;
 }
 
 .mat-sidenav-content {
-    scroll-behavior: smooth;
-    height: 100%;
-    overflow: auto;
+  scroll-behavior: smooth;
+  height: 100%;
+  overflow: auto;
 }
 
 //Cores dos Tipos de Pokémon
 .normal-type {
-    background-color: #a8a77a;
+  background-color: #a8a77a;
 }
 
 .fighting-type {
-    background-color: #c22e28;
+  background-color: #c22e28;
 }
 
 .flying-type {
-    background-color: #a98ff3;
+  background-color: #a98ff3;
 }
 
 .poison-type {
-    background-color: #a33ea1;
+  background-color: #a33ea1;
 }
 
 .ground-type {
-    background-color: #e2bf65;
+  background-color: #e2bf65;
 }
 
 .rock-type {
-    background-color: #b6a136;
+  background-color: #b6a136;
 }
 
 .bug-type {
-    background-color: #a6b91a;
+  background-color: #a6b91a;
 }
 
 .ghost-type {
-    background-color: #735797;
+  background-color: #735797;
 }
 
 .steel-type {
-    background-color: #b7b7ce;
+  background-color: #b7b7ce;
 }
 
 .fire-type {
-    background-color: #ee8130;
+  background-color: #ee8130;
 }
 
 .water-type {
-    background-color: #6390f0;
+  background-color: #6390f0;
 }
 
 .grass-type {
-    background-color: #7ac74c;
+  background-color: #7ac74c;
 }
 
 .electric-type {
-    background-color: #f7d02c;
+  background-color: #f7d02c;
 }
 
 .psychic-type {
-    background-color: #f95587;
+  background-color: #f95587;
 }
 
 .ice-type {
-    background-color: #96d9d6;
+  background-color: #96d9d6;
 }
 
 .dragon-type {
-    background-color: #6f35fc;
+  background-color: #6f35fc;
 }
 
 .dark-type {
-    background-color: #705746;
+  background-color: #705746;
 }
 
 .fairy-type {
-    background-color: #d685ad;
+  background-color: #d685ad;
 }
 
 .unknown-type {
-    background-color: grey;
+  background-color: grey;
 }
 
 .shadow-type {
-    background-color: grey;
+  background-color: grey;
 }
 
 //Modal
 mat-dialog-container {
-    margin-top: 50px;
+  margin-top: 80px;
 }
 
 //Botão
 .mat-button-focus-overlay {
-    background-color: transparent !important;
+  background-color: transparent !important;
 }
