@@ -1,36 +1,89 @@
 <div class="content">
-    <div class="pokelist">
-        <mat-grid-list [cols]="columns" rowHeight="300px" gutterSize="10px" (window:resize)="defineColumns()">
-            <mat-grid-tile *ngFor="let pokemon of pokemons">
-                <mat-card (click)="pokemon.loaded ? openPokemonDetails(pokemon.pokemonData) : null">
-                    <div *ngIf="pokemon.loaded">
-                        <div class="pokemon-image">
-                            <img mat-card-image src="{{ pokemon.pokemonData.img }}" alt="Photo of a Shiba Inu">
-                        </div>
-                        <mat-card-header>
-                            <mat-card-title>{{ pokemon.pokemonData.name | titlecase }}</mat-card-title>
-                            <mat-card-subtitle>{{ pokemon.pokemonData.id }}</mat-card-subtitle>
-                        </mat-card-header>
-                        <mat-card-content>
-                            <div class="pokemon-types">
-                                <div *ngFor="let type of pokemon.pokemonData.types" [ngClass]="{'normal-type': type === 'normal', 'fighting-type': type === 'fighting', 
-                                    'flying-type': type === 'flying', 'poison-type': type === 'poison', 'ground-type': type === 'ground', 'rock-type': type === 'rock', 
-                                    'bug-type': type === 'bug', 'ghost-type': type === 'ghost', 'steel-type': type === 'steel', 'fire-type': type === 'fire',
-                                    'water-type': type === 'water', 'grass-type': type === 'grass', 'electric-type': type === 'electric',
-                                    'psychic-type': type === 'psychic', 'ice-type': type === 'ice', 'dragon-type': type === 'dragon',
-                                    'dark-type': type === 'dark', 'fairy-type': type === 'fairy', 'unknown-type': type === 'unknown', 'shadow-type': type === 'shadow'}">
-                                    {{ type | titlecase }}
-                                </div>
-                            </div>
-                        </mat-card-content>
-                    </div>
-                    <mat-spinner *ngIf="!pokemon.loaded"></mat-spinner>
-                </mat-card>
-            </mat-grid-tile>
-        </mat-grid-list>
-        <div class="pagination-buttons">
-            <button mat-raised-button color="primary" [disabled]="pokemonsLoaded !== 20 || !pokedex.previous" (click)="changePage('previous')">Previous</button>
-            <button mat-raised-button color="primary" [disabled]="pokemonsLoaded !== 20 || !pokedex.next" (click)="changePage('next')">Next</button>
-        </div>
+  <div class="pokelist">
+    <!--Lista de Pokémons-->
+    <mat-grid-list
+      [cols]="columns"
+      rowHeight="300px"
+      gutterSize="10px"
+      (window:resize)="defineColumns()"
+    >
+      <mat-grid-tile *ngFor="let pokemon of pokemons">
+        <!--Card de Pokémon-->
+        <mat-card
+          (click)="
+            pokemon.loaded ? openPokemonDetails(pokemon.pokemonData) : null
+          "
+        >
+          <div *ngIf="pokemon.loaded">
+            <div class="pokemon-image">
+              <img
+                mat-card-image
+                src="{{ pokemon.pokemonData.img }}"
+                alt="{{ pokemon.pokemonData.name }}"
+              />
+            </div>
+            <mat-card-header>
+              <mat-card-title>{{
+                pokemon.pokemonData.name | titlecase
+              }}</mat-card-title>
+              <mat-card-subtitle>{{
+                pokemon.pokemonData.id
+              }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="pokemon-types">
+                <div
+                  *ngFor="let type of pokemon.pokemonData.types"
+                  [ngClass]="{
+                    'normal-type': type === 'normal',
+                    'fighting-type': type === 'fighting',
+                    'flying-type': type === 'flying',
+                    'poison-type': type === 'poison',
+                    'ground-type': type === 'ground',
+                    'rock-type': type === 'rock',
+                    'bug-type': type === 'bug',
+                    'ghost-type': type === 'ghost',
+                    'steel-type': type === 'steel',
+                    'fire-type': type === 'fire',
+                    'water-type': type === 'water',
+                    'grass-type': type === 'grass',
+                    'electric-type': type === 'electric',
+                    'psychic-type': type === 'psychic',
+                    'ice-type': type === 'ice',
+                    'dragon-type': type === 'dragon',
+                    'dark-type': type === 'dark',
+                    'fairy-type': type === 'fairy',
+                    'unknown-type': type === 'unknown',
+                    'shadow-type': type === 'shadow'
+                  }"
+                >
+                  {{ type | titlecase }}
+                </div>
+              </div>
+            </mat-card-content>
+          </div>
+          <mat-spinner *ngIf="!pokemon.loaded"></mat-spinner>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+    <!--Paginação-->
+    <div class="pagination-buttons">
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="pokemonsLoaded !== 20 || !pokedex.previous"
+        (click)="changePage('previous')"
+      >
+        Previous
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="pokemonsLoaded !== 20 || !pokedex.next"
+        (click)="changePage('next')"
+      >
+        Next
+      </button>
     </div>
+  </div>
 </div>

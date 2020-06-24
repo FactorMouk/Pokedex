@@ -1,90 +1,90 @@
 .content {
-    margin-top: 80px;
-    .pokelist {
-        padding: 65px 200px;
-        mat-grid-list {
-            mat-grid-tile {
-                mat-card {
-                    width: 200px;
-                    height: 250px;
-                    margin: 20px;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
-                    cursor: pointer;
-                    .pokemon-image {
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        img {
-                            width: 140px;
-                        }
-                    }
-                    mat-card-header {
-                        justify-content: center;
-                        mat-card-subtitle {
-                            text-align: center;
-                        }
-                    }
-                    mat-card-content {
-                        .pokemon-types {
-                            display: flex;
-                            justify-content: space-evenly;
-                            div {
-                                width: 70px;
-                                height: 25px;
-                                margin: 2px;
-                                text-align: center;
-                                color: white;
-                                border-radius: 5px;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        .pagination-buttons {
+  margin-top: 80px;
+  .pokelist {
+    padding: 65px 200px;
+    mat-grid-list {
+      mat-grid-tile {
+        mat-card {
+          width: 200px;
+          height: 250px;
+          margin: 20px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          .pokemon-image {
             display: flex;
             justify-content: center;
-            padding: 20px;
-            button {
-                min-width: 90px;
-                margin: 20px;
+            align-items: center;
+            img {
+              width: 140px;
             }
+          }
+          mat-card-header {
+            justify-content: center;
+            mat-card-subtitle {
+              text-align: center;
+            }
+          }
+          mat-card-content {
+            .pokemon-types {
+              display: flex;
+              justify-content: space-evenly;
+              div {
+                width: 70px;
+                height: 25px;
+                margin: 2px;
+                text-align: center;
+                color: white;
+                border-radius: 5px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              }
+            }
+          }
         }
+      }
     }
+    .pagination-buttons {
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+      button {
+        min-width: 90px;
+        margin: 20px;
+      }
+    }
+  }
 }
 
-@media(max-width: 1400px) {
-    .content {
-        .pokelist {
-            padding: 65px 50px;
-        }
+@media (max-width: 1400px) {
+  .content {
+    .pokelist {
+      padding: 65px 50px;
     }
+  }
 }
 
 @media (max-width: 1000px) {
-    .content {
-        .pokelist {
-            mat-grid-list {
-                mat-grid-tile {
-                    mat-card {
-                        margin: 5px;
-                    }
-                }
-            }
+  .content {
+    .pokelist {
+      mat-grid-list {
+        mat-grid-tile {
+          mat-card {
+            margin: 5px;
+          }
         }
+      }
     }
+  }
 }
 
 @media (max-width: 700px) {
-    .content {
-        .pokelist {
-            padding: 65px 20px;
-        }
+  .content {
+    .pokelist {
+      padding: 65px 20px;
     }
+  }
 }

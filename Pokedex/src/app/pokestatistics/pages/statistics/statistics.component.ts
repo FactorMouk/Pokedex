@@ -1,9 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Chart } from 'chart.js';
-import { Subscription } from 'rxjs';
+import { Chart } from 'chart.js'; // Biblioteca de gráficos
+import { Subscription } from 'rxjs'; // Tipo Subscription para manipulação dos Subscribes (Retorno de Services)
 
 import { PokemonService } from './../../../core/services/pokemon.service';
 import { RegionService } from './../../../core/services/region.service';
+
+import { TypeModel } from './../../../core/models/type-model';
+import { RegionModel } from './../../../core/models/region-model';
 
 @Component({
   selector: 'app-statistics',
@@ -11,21 +14,21 @@ import { RegionService } from './../../../core/services/region.service';
   styleUrls: ['./statistics.component.scss'],
 })
 export class StatisticsComponent implements OnInit {
-  @ViewChild('typesChart') private typesChartRef;
-  typesChartCanvas: any;
+  @ViewChild('typesChart') private typesChartRef; // Referência para gráfico de Tipos
+  typesChartCanvas: any; // Objeto gráfico (ChartJS) de Tipos
 
-  @ViewChild('regionsChart') private regionsChartRef;
-  regionsChartCanvas: any;
+  @ViewChild('regionsChart') private regionsChartRef; // Referência para gráfico de Regiões
+  regionsChartCanvas: any; // Objeto gráfico (ChartJS) de Regiões
 
-  types = [];
-  typesName = [];
-  typesAmount = [];
-  typesLoaded = 0;
+  types: Array<any> = []; // Array de tipos retornados
+  typesName: string[] = []; // Array auxiliar (para gráfico) de nomes de tipos
+  typesAmount: number[] = []; // Array auxiliar (para gráfico) de quantidade de tipos
+  typesLoaded: number = 0; // Quantidade de Tipos retornados pela API
 
-  regions = [];
-  regionsName = [];
-  locationsPerRegionAmount = [];
-  regionsLoaded = 0;
+  regions: Array<any> = []; // Array de regiões retornadas
+  regionsName: string[] = []; // Array auxiliar (para gráfico) de nomes de regiões
+  locationsPerRegionAmount: number[] = []; // Array auxiliar (para gráfico) de quantidade de localizações
+  regionsLoaded: number = 0; // Quantidade de Regiões retornadas pela API
 
   constructor(
     private pokemonService: PokemonService,
@@ -33,7 +36,7 @@ export class StatisticsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    document.querySelector('mat-sidenav-content').scrollTop = 0;
+    document.querySelector('mat-sidenav-content').scrollTop = 0; // Scrollando página para topo ao entrar na página
     this.getTypes();
     this.getRegions();
   }
@@ -55,21 +58,24 @@ export class StatisticsComponent implements OnInit {
 
   paginationTypesSubscribe: Subscription;
   typesSubscribe: Subscription;
+  // Método de captura de dados de Tipos
   getTypes() {
     this.paginationTypesSubscribe = this.pokemonService.getTypes().subscribe(
       (types: any) => {
+        // Definindo objetos de associação entre Tipos e quantidade de Pokémons
         for (let i = 0; i < types.results.length; i++) {
           this.types.push({
             name: types.results[i].name,
             amount: 0,
           });
+          // Capturando dados do Tipo
           this.typesSubscribe = this.pokemonService
             .getPokemonsPerType(
               types.results[i].url.substring(
                 'https://pokeapi.co/api/v2/type/'.length
               )
             )
-            .subscribe((typeData: any) => {
+            .subscribe((typeData: TypeModel) => {
               this.typesLoaded++;
               this.types[i].amount = typeData.pokemon.length;
               if (this.typesLoaded === this.types.length) {
@@ -88,22 +94,25 @@ export class StatisticsComponent implements OnInit {
 
   paginationRegionsSubscribe: Subscription;
   regionsSubscribe: Subscription;
+  // Método de captura de dados de Regiões
   getRegions() {
     this.paginationRegionsSubscribe = this.regionService
       .getRegions()
       .subscribe((regions: any) => {
+        // Definindo objetos de associação entre Regiões e quantidade de Localizações por Região
         for (let i = 0; i < regions.results.length; i++) {
           this.regions.push({
             name: regions.results[i].name,
             locationsAmount: 0,
           });
+          // Capturando dados de Região
           this.regionsSubscribe = this.regionService
             .getRegion(
               regions.results[i].url.substring(
                 'https://pokeapi.co/api/v2/region/'.length
               )
             )
-            .subscribe((regionData: any) => {
+            .subscribe((regionData: RegionModel) => {
               this.regionsLoaded++;
               this.regions[i].locationsAmount = regionData.locations.length;
               if (this.regionsLoaded === this.regions.length) {
@@ -118,6 +127,7 @@ export class StatisticsComponent implements OnInit {
       });
   }
 
+  // Método de criação de gráfico de Tipos
   createTypesChart() {
     this.typesChartCanvas = new Chart(this.typesChartRef.nativeElement, {
       type: 'bar',
@@ -187,6 +197,7 @@ export class StatisticsComponent implements OnInit {
     });
   }
 
+  // Método de criação de gráfico de Regiões
   createRegionsChart() {
     this.regionsChartCanvas = new Chart(this.regionsChartRef.nativeElement, {
       type: 'pie',
@@ -216,11 +227,6 @@ export class StatisticsComponent implements OnInit {
             ],
           },
         ],
-      },
-      options: {
-        // legend: {
-        //   display: false
-        // },
       },
     });
   }

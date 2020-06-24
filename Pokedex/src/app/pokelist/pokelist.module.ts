@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from './../shared/shared.module';
-import { PokelistRoutingModule } from './pokelist-routing.module';
-import { MaterialModule } from './../material.module';
+import { SharedModule } from './../shared/shared.module'; // Módulo de elementos compartilhados
+import { PokelistRoutingModule } from './pokelist-routing.module'; // Módulo de roteamento de Pokélist
+import { MaterialModule } from './../material.module'; // Módulo do Material
 
 import { ListComponent } from './pages/list/list.component';
 

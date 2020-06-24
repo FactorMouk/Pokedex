@@ -1,3 +1,4 @@
+// URL da API (PokeAPI)
 export const apiUrl = {
   baseUrl: 'https://pokeapi.co/api/v2/',
 };

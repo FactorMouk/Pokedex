@@ -1,46 +1,82 @@
 <div class="container">
-    <mat-toolbar>
-        <h3>Pokédex</h3>
-        <div class="nav-buttons">
-            <button mat-stroked-button routerLink="/pokelist" routerLinkActive="nav-button-selected" (click)="closeModals();">
-                <img src="./../assets/icons/pokemon.png">
-                Pokémons
-            </button>
-            <button mat-stroked-button routerLink="/pokestatistics" routerLinkActive="nav-button-selected" (click)="closeModals();">
-                <img src="./../assets/icons/statistics.png">
-                Estatísticas
-            </button>
+  <!--Navbar da versão Desktop-->
+  <mat-toolbar>
+    <h3>Pokédex</h3>
+    <div class="nav-buttons">
+      <button
+        mat-stroked-button
+        routerLink="/pokelist"
+        routerLinkActive="nav-button-selected"
+        (click)="closeModals()"
+      >
+        <img src="./../assets/icons/pokemon.png" />
+        Pokémons
+      </button>
+      <button
+        mat-stroked-button
+        routerLink="/pokestatistics"
+        routerLinkActive="nav-button-selected"
+        (click)="closeModals()"
+      >
+        <img src="./../assets/icons/statistics.png" />
+        Statistics
+      </button>
+    </div>
+    <span class="version">Version 1.0.0</span>
+    <div class="menu-button-container">
+      <button
+        class="toggle-button"
+        mat-icon-button
+        (click)="snav.toggle(); closeModals()"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
+  <mat-sidenav-container>
+    <!--Navbar da versão Mobile-->
+    <mat-sidenav #snav fixedInViewport="true">
+      <div class="sidenav">
+        <div class="sidenav-buttons">
+          <button
+            mat-stroked-button
+            routerLink="/pokelist"
+            routerLinkActive="nav-button-selected"
+            (click)="closeModals(); snav.toggle()"
+          >
+            <img src="./../assets/icons/pokemon.png" />
+            Pokémons
+          </button>
+          <button
+            mat-stroked-button
+            routerLink="/pokestatistics"
+            routerLinkActive="nav-button-selected"
+            (click)="closeModals(); snav.toggle()"
+          >
+            <img src="./../assets/icons/statistics.png" />
+            Statistics
+          </button>
         </div>
-        <span class="version">Versão 1.0.0</span>
-        <div class="menu-button-container">
-            <button class="toggle-button" mat-icon-button (click)="snav.toggle(); closeModals();">
-                <mat-icon>menu</mat-icon>
-            </button>
+        <span class="version">Version 1.0.0</span>
+      </div>
+    </mat-sidenav>
+    <!--Container das rotas da aplicação-->
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+      <!--Footer-->
+      <footer>
+        <div>
+          Icons made by
+          <a href="https://www.flaticon.com/authors/freepik" title="Freepik"
+            >Freepik</a
+          >
+          from
+          <a href="https://www.flaticon.com/" title="Flaticon"
+            >www.flaticon.com</a
+          >
         </div>
-    </mat-toolbar>
-    <mat-sidenav-container>
-        <mat-sidenav #snav fixedInViewport="true">
-            <div class="sidenav">
-                <div class="sidenav-buttons">
-                    <button mat-stroked-button routerLink="/pokelist" routerLinkActive="nav-button-selected" (click)="closeModals(); snav.toggle();">
-                        <img src="./../assets/icons/pokemon.png">
-                        Pokémons
-                    </button>
-                    <button mat-stroked-button routerLink="/pokestatistics" routerLinkActive="nav-button-selected" (click)="closeModals(); snav.toggle();">
-                        <img src="./../assets/icons/statistics.png">
-                        Estatísticas
-                    </button>
-                </div>
-                <span class="version">Versão 1.0.0</span>
-            </div>
-        </mat-sidenav>
-        <mat-sidenav-content>
-            <router-outlet></router-outlet>
-            <footer>
-                <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from
-                    <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-                <div>&copy; Copyright 2020 - João Vitor Oliveira</div>
-            </footer>
-        </mat-sidenav-content>
-    </mat-sidenav-container>
+        <div>&copy; Copyright 2020 - João Vitor Oliveira</div>
+      </footer>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>

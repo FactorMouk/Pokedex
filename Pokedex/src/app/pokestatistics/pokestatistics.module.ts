@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from './../material.module';
-import { PokestatisticsRoutingModule } from './pokestatistics-routing.module';
+import { PokestatisticsRoutingModule } from './pokestatistics-routing.module'; // Módulo de roteamento de Pokestatistics
+import { MaterialModule } from './../material.module'; // Módulo do Material
+
 import { StatisticsComponent } from './pages/statistics/statistics.component';
 
 @NgModule({

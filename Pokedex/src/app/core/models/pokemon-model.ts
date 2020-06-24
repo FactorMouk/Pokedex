@@ -1,3 +1,4 @@
+// Modelo de objeto Pokémon retornado pela API
 export class PokemonModel {
   id: string;
   name: string;
@@ -15,8 +16,20 @@ export class PokemonModel {
   location_area_encounters: string;
   moves: [];
   order: number;
-  species: {};
-  sprites: {};
+  species: {
+    name: string;
+    url: string;
+  };
+  sprites: {
+    back_default: string;
+    back_female: string;
+    back_shiny: string;
+    back_shiny_female: string;
+    front_default: string;
+    front_female: string;
+    front_shiny: string;
+    front_shiny_female: string;
+  };
   constructor(
     id: string = null,
     name: string = null,
@@ -34,8 +47,20 @@ export class PokemonModel {
     location_area_encounters: string = null,
     moves: [] = null,
     order: number = null,
-    species: {} = null,
-    sprites: {} = null
+    species: {
+      name: string;
+      url: string;
+    } = null,
+    sprites: {
+      back_default: string;
+      back_female: string;
+      back_shiny: string;
+      back_shiny_female: string;
+      front_default: string;
+      front_female: string;
+      front_shiny: string;
+      front_shiny_female: string;
+    } = null
   ) {
     this.id = id;
     this.name = name;

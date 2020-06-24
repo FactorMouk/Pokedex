@@ -2,6 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+// URL da API (PokeAPI)
 export const apiUrl = {
   baseUrl: 'https://pokeapi.co/api/v2/',
 };

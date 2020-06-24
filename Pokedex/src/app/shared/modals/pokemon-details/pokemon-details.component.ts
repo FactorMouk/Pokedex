@@ -9,11 +9,13 @@ import { Chart } from 'chart.js';
   styleUrls: ['./pokemon-details.component.scss'],
 })
 export class PokemonDetailsComponent implements OnInit {
-  @ViewChild('statsChart') private statsRef;
-  chart: any;
-  pokemonData: PokemonModel;
+  @ViewChild('statsChart') private statsRef; // Referência para gráfico de Stats
+  chart: any; // Objeto gráfico (ChartJS) de Stats
+
+  pokemonData: PokemonModel; // Dados do Pokémon
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
+    // Recebendo dados do Pokémon
     this.pokemonData = this.data.pokemon;
   }
 
@@ -23,6 +25,7 @@ export class PokemonDetailsComponent implements OnInit {
     this.createStatsChart();
   }
 
+  //Criando gráfico de Stats
   createStatsChart() {
     if (this.statsRef) {
       this.chart = new Chart(this.statsRef.nativeElement, {

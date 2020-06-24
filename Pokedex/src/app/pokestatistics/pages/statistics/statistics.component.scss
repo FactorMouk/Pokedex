@@ -1,68 +1,68 @@
 .content {
-    margin-top: 80px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 40px 80px;
-    div {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        .chart {
-            width: 450px;
-            margin: 25px;
-        }
-        .types {
-            align-self: flex-end;
-        }
-        .regions {
-            align-self: flex-start;
-        }
+  margin-top: 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 40px 80px;
+  div {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    .chart {
+      width: 450px;
+      margin: 25px;
     }
+    .types {
+      align-self: flex-end;
+    }
+    .regions {
+      align-self: flex-start;
+    }
+  }
 }
 
 .background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 999;
-    background-color: gray;
-    height: 100vh;
-    width: 100vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  background-color: gray;
+  height: 100vh;
+  width: 100vw;
 }
 
 @media (max-width: 1200px) {
-    .content {
-        padding: 40px 20px;
-        div {
-            .chart {
-                width: 400px;
-            }
-        }
+  .content {
+    padding: 40px 20px;
+    div {
+      .chart {
+        width: 400px;
+      }
     }
+  }
 }
 
 @media (max-width: 950px) {
-    .content {
-        grid-template-columns: 1fr;
-        grid-template-rows: 1fr 1fr;
-        div {
-            .types {
-                align-self: center;
-            }
-            .regions {
-                align-self: center;
-            }
-        }
+  .content {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    div {
+      .types {
+        align-self: center;
+      }
+      .regions {
+        align-self: center;
+      }
     }
+  }
 }
 
 @media (max-width: 500px) {
-    .content {
-        padding: 40px 0px;
-        div {
-            .chart {
-                width: 260px;
-            }
-        }
+  .content {
+    padding: 40px 0px;
+    div {
+      .chart {
+        width: 260px;
+      }
     }
+  }
 }

@@ -1,43 +1,62 @@
+<!--Modal de Detalhes de Pokémon-->
 <div class="content" *ngIf="pokemonData">
-    <h2>{{ pokemonData.name | titlecase }} - Nº{{ pokemonData.id }}</h2>
-    <div class="img-container">
-        <img src="{{ pokemonData.img }}">
+  <h2>{{ pokemonData.name | titlecase }} - Nº{{ pokemonData.id }}</h2>
+  <div class="img-container">
+    <img src="{{ pokemonData.img }}" />
+  </div>
+  <div class="data-container">
+    <span>
+      <h3><b>Height</b></h3>
+      <p>{{ pokemonData.height }}</p>
+    </span>
+    <span>
+      <h3><b>Weight</b></h3>
+      <p>{{ pokemonData.weight }}</p>
+    </span>
+    <span class="abilities-container">
+      <h3><b>Abilities</b></h3>
+      <p *ngFor="let ability of pokemonData.abilities">
+        {{ ability | titlecase }}
+      </p>
+    </span>
+  </div>
+  <div class="stats-container">
+    <div>
+      <canvas #statsChart width="300" height="300"></canvas>
     </div>
-    <div class="data-container">
-        <span>
-            <h3><b>Height</b></h3>
-            <p>{{ pokemonData.height }}</p>
-        </span>
-        <span>
-            <h3><b>Weight</b></h3>
-            <p>{{ pokemonData.weight }}</p>
-        </span>
-        <span class="abilities-container">
-            <h3><b>Abilities</b></h3>
-            <p *ngFor="let ability of pokemonData.abilities">
-                {{ ability | titlecase }}
-            </p>
-        </span>
-    </div>
-    <div class="stats-container">
-        <div>
-            <canvas #statsChart width="300" height="300"></canvas>
+  </div>
+  <div class="types-container">
+    <span>
+      <h3><b>Types</b></h3>
+      <div class="pokemon-types">
+        <div
+          *ngFor="let type of pokemonData.types"
+          [ngClass]="{
+            'normal-type': type === 'normal',
+            'fighting-type': type === 'fighting',
+            'flying-type': type === 'flying',
+            'poison-type': type === 'poison',
+            'ground-type': type === 'ground',
+            'rock-type': type === 'rock',
+            'bug-type': type === 'bug',
+            'ghost-type': type === 'ghost',
+            'steel-type': type === 'steel',
+            'fire-type': type === 'fire',
+            'water-type': type === 'water',
+            'grass-type': type === 'grass',
+            'electric-type': type === 'electric',
+            'psychic-type': type === 'psychic',
+            'ice-type': type === 'ice',
+            'dragon-type': type === 'dragon',
+            'dark-type': type === 'dark',
+            'fairy-type': type === 'fairy',
+            'unknown-type': type === 'unknown',
+            'shadow-type': type === 'shadow'
+          }"
+        >
+          {{ type | titlecase }}
         </div>
-    </div>
-    <div class="types-container">
-        <span>
-            <h3><b>Types</b></h3>
-            <div class="pokemon-types">
-                <div *ngFor="let type of pokemonData.types"
-                    [ngClass]="{'normal-type': type === 'normal', 'fighting-type': type === 'fighting', 
-                    'flying-type': type === 'flying', 'poison-type': type === 'poison', 'ground-type': type === 'ground', 'rock-type': type === 'rock', 
-                    'bug-type': type === 'bug', 'ghost-type': type === 'ghost', 'steel-type': type === 'steel', 'fire-type': type === 'fire',
-                    'water-type': type === 'water', 'grass-type': type === 'grass', 'electric-type': type === 'electric',
-                    'psychic-type': type === 'psychic', 'ice-type': type === 'ice', 'dragon-type': type === 'dragon',
-                    'dark-type': type === 'dark', 'fairy-type': type === 'fairy', 'unknown-type': type === 'unknown', 'shadow-type': type === 'shadow'}">
-                    {{ type | titlecase }}
-                </div>
-            </div>
-        </span>
-    </div>
+      </div>
+    </span>
+  </div>
 </div>
