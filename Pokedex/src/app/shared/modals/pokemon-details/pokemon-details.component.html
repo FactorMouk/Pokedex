@@ -28,7 +28,8 @@
         <span>
             <h3><b>Types</b></h3>
             <div class="pokemon-types">
-                <div *ngFor="let type of pokemonData.types" [ngClass]="{'normal-type': type === 'normal', 'fighting-type': type === 'fighting', 
+                <div *ngFor="let type of pokemonData.types"
+                    [ngClass]="{'normal-type': type === 'normal', 'fighting-type': type === 'fighting', 
                     'flying-type': type === 'flying', 'poison-type': type === 'poison', 'ground-type': type === 'ground', 'rock-type': type === 'rock', 
                     'bug-type': type === 'bug', 'ghost-type': type === 'ghost', 'steel-type': type === 'steel', 'fire-type': type === 'fire',
                     'water-type': type === 'water', 'grass-type': type === 'grass', 'electric-type': type === 'electric',
