@@ -7,7 +7,9 @@ import { MatDialog } from '@angular/material/dialog'; // Biblioteca do elemento 
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor(private dialogRef: MatDialog) {}
+  constructor(private dialogRef: MatDialog) {
+    screen.orientation.lock('portrait');
+  }
 
   // Método para fechamento de todos os possíveis dialogs (modais) abertos
   // Usado quando há mudança de página e ao abrir a sidenav
