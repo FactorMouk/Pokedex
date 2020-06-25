@@ -21,7 +21,7 @@ Foi utilizada a API [PokéAPI](https://pokeapi.co/) como servidora de dados.
 ## Deploy
 
 O deploy da aplicação foi feito na plataforma [Heroku](www.heroku.com) e pode ser acessado
-através [deste link](https://pokedex-teste-justa.herokuapp.com).
+através [deste link](https://pokepediadex.herokuapp.com).
 Vale salientar que a aplicação está com integração contínua associada à sua branch master.
 
 ## Estruturação do código
