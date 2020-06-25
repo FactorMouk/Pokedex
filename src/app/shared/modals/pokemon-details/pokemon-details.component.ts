@@ -1,32 +1,36 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { PokemonModel } from './../../../core/models/pokemon-model';
+import { PokemonModel } from './../../../core/models/pokemon/pokemon.model';
 import { Chart } from 'chart.js';
+
+import { PokemonStatModel } from 'src/app/core/models/pokemon/pokemon-stat.model';
 
 @Component({
   selector: 'app-pokemon-details',
   templateUrl: './pokemon-details.component.html',
   styleUrls: ['./pokemon-details.component.scss'],
 })
-export class PokemonDetailsComponent implements OnInit {
+export class PokemonDetailsComponent {
   @ViewChild('statsChart') private statsRef; // Referência para gráfico de Stats
-  chart: any; // Objeto gráfico (ChartJS) de Stats
+  chart: Chart; // Objeto gráfico (ChartJS) de Stats
 
   pokemonData: PokemonModel; // Dados do Pokémon
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: unknown) {
     // Recebendo dados do Pokémon
-    this.pokemonData = this.data.pokemon;
+    this.pokemonData = this.data['pokemon'];
   }
 
-  ngOnInit(): void {}
-
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.createStatsChart();
   }
 
   //Criando gráfico de Stats
-  createStatsChart() {
+  createStatsChart(): void {
+    const stats = [];
+    this.pokemonData.stats.forEach((stat) => {
+      stats.push(stat.base_stat);
+    });
     if (this.statsRef) {
       this.chart = new Chart(this.statsRef.nativeElement, {
         type: 'bar',
@@ -41,7 +45,7 @@ export class PokemonDetailsComponent implements OnInit {
           ],
           datasets: [
             {
-              data: this.pokemonData.stats,
+              data: stats,
               backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',

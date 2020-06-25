@@ -18,7 +18,7 @@
             <div class="pokemon-image">
               <img
                 mat-card-image
-                src="{{ pokemon.pokemonData.img }}"
+                src="{{ pokemon.pokemonData.sprites.front_default }}"
                 alt="{{ pokemon.pokemonData.name }}"
               />
             </div>
@@ -35,29 +35,29 @@
                 <div
                   *ngFor="let type of pokemon.pokemonData.types"
                   [ngClass]="{
-                    'normal-type': type === 'normal',
-                    'fighting-type': type === 'fighting',
-                    'flying-type': type === 'flying',
-                    'poison-type': type === 'poison',
-                    'ground-type': type === 'ground',
-                    'rock-type': type === 'rock',
-                    'bug-type': type === 'bug',
-                    'ghost-type': type === 'ghost',
-                    'steel-type': type === 'steel',
-                    'fire-type': type === 'fire',
-                    'water-type': type === 'water',
-                    'grass-type': type === 'grass',
-                    'electric-type': type === 'electric',
-                    'psychic-type': type === 'psychic',
-                    'ice-type': type === 'ice',
-                    'dragon-type': type === 'dragon',
-                    'dark-type': type === 'dark',
-                    'fairy-type': type === 'fairy',
-                    'unknown-type': type === 'unknown',
-                    'shadow-type': type === 'shadow'
+                    'normal-type': type.type.name === 'normal',
+                    'fighting-type': type.type.name === 'fighting',
+                    'flying-type': type.type.name === 'flying',
+                    'poison-type': type.type.name === 'poison',
+                    'ground-type': type.type.name === 'ground',
+                    'rock-type': type.type.name === 'rock',
+                    'bug-type': type.type.name === 'bug',
+                    'ghost-type': type.type.name === 'ghost',
+                    'steel-type': type.type.name === 'steel',
+                    'fire-type': type.type.name === 'fire',
+                    'water-type': type.type.name === 'water',
+                    'grass-type': type.type.name === 'grass',
+                    'electric-type': type.type.name === 'electric',
+                    'psychic-type': type.type.name === 'psychic',
+                    'ice-type': type.type.name === 'ice',
+                    'dragon-type': type.type.name === 'dragon',
+                    'dark-type': type.type.name === 'dark',
+                    'fairy-type': type.type.name === 'fairy',
+                    'unknown-type': type.type.name === 'unknown',
+                    'shadow-type': type.type.name === 'shadow'
                   }"
                 >
-                  {{ type | titlecase }}
+                  {{ type.type.name | titlecase }}
                 </div>
               </div>
             </mat-card-content>

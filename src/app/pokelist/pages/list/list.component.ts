@@ -6,8 +6,9 @@ import { PokemonDetailsComponent } from './../../../shared/modals/pokemon-detail
 
 import { PokemonService } from './../../../core/services/pokemon.service';
 
-import { PaginationModel } from './../../../core/models/pagination-model';
-import { PokemonModel } from '../../../core/models/pokemon-model';
+import { PaginationModel } from '../../../core/models/pagination.model';
+import { ReferenceModel } from '../../../core/models/reference.model';
+import { PokemonModel } from '../../../core/models/pokemon/pokemon.model';
 
 @Component({
   selector: 'app-list',
@@ -16,9 +17,9 @@ import { PokemonModel } from '../../../core/models/pokemon-model';
 })
 export class ListComponent implements OnInit {
   pokedex: PaginationModel; // Paginação de Pokémons retornada pela API
-  pokemons: Array<any> = []; // Array de Pokémons mostrados por página
-  currentOffset: number = 0; // Valor de offset (índice do primeiro Pokémon mostrado na página)
-  pokemonsLoaded: number = 0; // Quantidade de Pokémons retornados pela API
+  pokemons: Array<unknown> = []; // Array de Pokémons mostrados por página
+  currentOffset = 0; // Valor de offset (índice do primeiro Pokémon mostrado na página)
+  pokemonsLoaded = 0; // Quantidade de Pokémons retornados pela API
 
   columns: number; // Quantidade de colunas da lista de Pokémon
 
@@ -47,58 +48,34 @@ export class ListComponent implements OnInit {
   paginationSubscribe: Subscription;
   pokemonSubscribe: Subscription;
   // Método de captura de dados de paginação e população de array de Pokémon
-  getPokemons(pagination: string) {
+  getPokemons(pagination: string): void {
     this.pokedex = null;
     this.pokemons = [];
     this.pokemonsLoaded = 0;
     // Definindo objetos relativos ao carregamento de Pokémons
     for (let i = 0; i < 20; i++) {
-      this.pokemons.push({ loaded: false });
+      this.pokemons.push({ loaded: false, pokemonData: null });
     }
     this.paginationSubscribe = this.pokemonService
       .getPokemons(pagination)
       .subscribe(
-        (pokedex: any) => {
-          this.pokedex = pokedex;
+        (pokedex) => {
+          this.pokedex = new PaginationModel().deserialize(pokedex);
           // Capturando Pokémons relativos à paginação atual
-          this.pokedex.results.forEach((pokemon: any) => {
+          this.pokedex.results.forEach((pokemonReference: ReferenceModel) => {
             this.pokemonSubscribe = this.pokemonService
               .getPokemon(
-                pokemon.url.substring(
+                pokemonReference.url.substring(
                   'https://pokeapi.co/api/v2/pokemon/'.length
                 )
               )
-              .subscribe((pokemonData: PokemonModel) => {
-                //Definindo os tipos do Pokémon
-                const types = [];
-                pokemonData.types.forEach((typeData: any) => {
-                  types.push(typeData.type.name);
-                });
-                //Definindo os stats do Pokémon
-                const stats = [];
-                pokemonData.stats.forEach((statData: any) => {
-                  stats.push(statData.base_stat);
-                });
-                //Definindo as habilidades do Pokémon
-                const abilities = [];
-                pokemonData.abilities.forEach((abilityData: any) => {
-                  abilities.push(abilityData.ability.name);
-                });
+              .subscribe((pokemonData) => {
                 this.pokemons[
                   parseInt(pokemonData.id) - (1 + this.currentOffset)
-                ].pokemonData = new PokemonModel(
-                  pokemonData.id,
-                  pokemonData.name,
-                  pokemonData.sprites.front_default,
-                  types,
-                  pokemonData.height,
-                  pokemonData.weight,
-                  stats,
-                  abilities
-                );
-                this.pokemons[
-                  parseInt(pokemonData.id) - (1 + this.currentOffset)
-                ].loaded = true;
+                ] = {
+                  loaded: true,
+                  pokemonData: new PokemonModel().deserialize(pokemonData),
+                };
                 this.pokemonsLoaded++;
               });
           });
@@ -108,7 +85,7 @@ export class ListComponent implements OnInit {
   }
 
   // Método de mudança de página
-  changePage(type: string) {
+  changePage(type: string): void {
     document.querySelector('mat-sidenav-content').scrollTop = 0;
     let url;
     if (type === 'previous') {
@@ -124,7 +101,7 @@ export class ListComponent implements OnInit {
   }
 
   // Método de abertura de modal de Detalhes de Pokémon
-  openPokemonDetails(pokemon) {
+  openPokemonDetails(pokemon): void {
     this.pokemonDetailsModal = this.dialog.open(PokemonDetailsComponent, {
       data: {
         pokemon: pokemon,
@@ -133,7 +110,7 @@ export class ListComponent implements OnInit {
   }
 
   // Método de definição de quantidade de colunas na página
-  defineColumns() {
+  defineColumns(): void {
     if (window.innerWidth <= 400) {
       this.columns = 1;
     } else if (window.innerWidth <= 600) {
