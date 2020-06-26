@@ -71,7 +71,7 @@
       <button
         mat-raised-button
         color="primary"
-        [disabled]="pokemonsLoaded !== 20 || !pokedex.previous"
+        [disabled]="!isPokemonsLoaded || !pokedex.previous"
         (click)="changePage('previous')"
       >
         Previous
@@ -79,7 +79,7 @@
       <button
         mat-raised-button
         color="primary"
-        [disabled]="pokemonsLoaded !== 20 || !pokedex.next"
+        [disabled]="!isPokemonsLoaded || !pokedex.next"
         (click)="changePage('next')"
       >
         Next

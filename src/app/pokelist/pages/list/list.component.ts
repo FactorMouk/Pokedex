@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog'; // Biblioteca do elemento Dialog (Modal) do Material
-import { Subscription } from 'rxjs'; // Tipo Subscription para manipulação dos Subscribes (Retorno de Services)
+import { Subscription, forkJoin } from 'rxjs'; // Tipo Subscription para manipulação dos Subscribes (Retorno de Services)
+import { switchMap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 import { PokemonDetailsComponent } from './../../../shared/modals/pokemon-details/pokemon-details.component';
 
@@ -19,7 +21,7 @@ export class ListComponent implements OnInit {
   pokedex: PaginationModel; // Paginação de Pokémons retornada pela API
   pokemons: Array<unknown> = []; // Array de Pokémons mostrados por página
   currentOffset = 0; // Valor de offset (índice do primeiro Pokémon mostrado na página)
-  pokemonsLoaded = 0; // Quantidade de Pokémons retornados pela API
+  isPokemonsLoaded = false; // Indica se todos os Pokémons foram retornados
 
   columns: number; // Quantidade de colunas da lista de Pokémon
 
@@ -51,37 +53,38 @@ export class ListComponent implements OnInit {
   getPokemons(pagination: string): void {
     this.pokedex = null;
     this.pokemons = [];
-    this.pokemonsLoaded = 0;
+    this.isPokemonsLoaded = false;
     // Definindo objetos relativos ao carregamento de Pokémons
     for (let i = 0; i < 20; i++) {
       this.pokemons.push({ loaded: false, pokemonData: null });
     }
     this.paginationSubscribe = this.pokemonService
       .getPokemons(pagination)
-      .subscribe(
-        (pokedex) => {
+      .pipe(
+        switchMap((pokedex) => {
           this.pokedex = new PaginationModel().deserialize(pokedex);
-          // Capturando Pokémons relativos à paginação atual
+          const observables = [];
           this.pokedex.results.forEach((pokemonReference: ReferenceModel) => {
-            this.pokemonSubscribe = this.pokemonService
-              .getPokemon(
+            observables.push(
+              this.pokemonService.getPokemon(
                 pokemonReference.url.substring(
                   'https://pokeapi.co/api/v2/pokemon/'.length
                 )
               )
-              .subscribe((pokemonData) => {
-                this.pokemons[
-                  parseInt(pokemonData.id) - (1 + this.currentOffset)
-                ] = {
-                  loaded: true,
-                  pokemonData: new PokemonModel().deserialize(pokemonData),
-                };
-                this.pokemonsLoaded++;
-              });
+            );
           });
-        },
-        (error) => console.log(error)
-      );
+          return forkJoin(observables);
+        })
+      )
+      .subscribe((pokemonsData: PokemonModel[]) => {
+        this.isPokemonsLoaded = true;
+        pokemonsData.forEach((pokemonData: PokemonModel) => {
+          this.pokemons[parseInt(pokemonData.id) - (1 + this.currentOffset)] = {
+            loaded: true,
+            pokemonData: new PokemonModel().deserialize(pokemonData),
+          };
+        });
+      });
   }
 
   // Método de mudança de página
