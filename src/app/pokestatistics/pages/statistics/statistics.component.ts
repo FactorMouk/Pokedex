@@ -1,9 +1,13 @@
+import { RegionModel } from './../../../core/models/region.model';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js'; // Biblioteca de gráficos
-import { Subscription } from 'rxjs'; // Tipo Subscription para manipulação dos Subscribes (Retorno de Services)
+import { Subscription, forkJoin } from 'rxjs'; // Tipo Subscription para manipulação dos Subscribes (Retorno de Services)
+import { switchMap } from 'rxjs/operators';
 
 import { PokemonService } from './../../../core/services/pokemon.service';
 import { RegionService } from './../../../core/services/region.service';
+
+import { TypeModel } from 'src/app/core/models/type/type.model';
 
 @Component({
   selector: 'app-statistics',
@@ -17,15 +21,14 @@ export class StatisticsComponent implements OnInit {
   @ViewChild('regionsChart') private regionsChartRef; // Referência para gráfico de Regiões
   regionsChartCanvas: Chart; // Objeto gráfico (ChartJS) de Regiões
 
-  types: Array<unknown> = []; // Array de tipos retornados
   typesName: string[] = []; // Array auxiliar (para gráfico) de nomes de tipos
   typesAmount: number[] = []; // Array auxiliar (para gráfico) de quantidade de tipos
-  typesLoaded = 0; // Quantidade de Tipos retornados pela API
+  isTypesLoaded = false; // Indica se todos os tipos de Pokémons foram retornados
 
   regions: Array<unknown> = []; // Array de regiões retornadas
   regionsName: string[] = []; // Array auxiliar (para gráfico) de nomes de regiões
   locationsPerRegionAmount: number[] = []; // Array auxiliar (para gráfico) de quantidade de localizações
-  regionsLoaded = 0; // Quantidade de Regiões retornadas pela API
+  isRegionsLoaded = false; // Indica se todas as regiões foram retornadas
 
   constructor(
     private pokemonService: PokemonService,
@@ -42,86 +45,71 @@ export class StatisticsComponent implements OnInit {
     if (this.paginationTypesSubscribe) {
       this.paginationTypesSubscribe.unsubscribe();
     }
-    if (this.typesSubscribe) {
-      this.typesSubscribe.unsubscribe();
-    }
     if (this.paginationRegionsSubscribe) {
       this.paginationRegionsSubscribe.unsubscribe();
-    }
-    if (this.regionsSubscribe) {
-      this.regionsSubscribe.unsubscribe();
     }
   }
 
   paginationTypesSubscribe: Subscription;
-  typesSubscribe: Subscription;
   // Método de captura de dados de Tipos
   getTypes(): void {
-    this.paginationTypesSubscribe = this.pokemonService.getTypes().subscribe(
-      (types) => {
-        // Definindo objetos de associação entre Tipos e quantidade de Pokémons
-        for (let i = 0; i < types.results.length; i++) {
-          this.types.push({
-            name: types.results[i].name,
-            amount: 0,
-          });
-          // Capturando dados do Tipo
-          this.typesSubscribe = this.pokemonService
-            .getPokemonsPerType(
-              types.results[i].url.substring(
-                'https://pokeapi.co/api/v2/type/'.length
+    this.paginationTypesSubscribe = this.pokemonService
+      .getTypes()
+      .pipe(
+        switchMap((types) => {
+          const observables = [];
+          types.results.forEach((type) => {
+            observables.push(
+              this.pokemonService.getPokemonsPerType(
+                type.url.substring('https://pokeapi.co/api/v2/type/'.length)
               )
-            )
-            .subscribe((typeData) => {
-              this.typesLoaded++;
-              this.types[i]['amount'] = typeData.pokemon.length;
-              if (this.typesLoaded === this.types.length) {
-                this.types.forEach((type) => {
-                  this.typesName.push(type['name']);
-                  this.typesAmount.push(type['amount']);
-                });
-                this.createTypesChart();
-              }
-            });
-        }
-      },
-      (error) => console.log(error)
-    );
+            );
+          });
+          return forkJoin(observables);
+        })
+      )
+      .subscribe(
+        (types: TypeModel[]) => {
+          types.forEach((type) => {
+            this.typesName.push(type.name);
+            this.typesAmount.push(type.pokemon.length);
+          });
+          this.isTypesLoaded = true;
+          this.createTypesChart();
+        },
+        (error) => console.log(error)
+      );
   }
 
   paginationRegionsSubscribe: Subscription;
-  regionsSubscribe: Subscription;
   // Método de captura de dados de Regiões
   getRegions(): void {
     this.paginationRegionsSubscribe = this.regionService
       .getRegions()
-      .subscribe((regions) => {
-        // Definindo objetos de associação entre Regiões e quantidade de Localizações por Região
-        for (let i = 0; i < regions.results.length; i++) {
-          this.regions.push({
-            name: regions.results[i].name,
-            locationsAmount: 0,
-          });
-          // Capturando dados de Região
-          this.regionsSubscribe = this.regionService
-            .getRegion(
-              regions.results[i].url.substring(
-                'https://pokeapi.co/api/v2/region/'.length
+      .pipe(
+        switchMap((regions) => {
+          const observables = [];
+          regions.results.forEach((region) => {
+            observables.push(
+              this.regionService.getRegion(
+                region.url.substring('https://pokeapi.co/api/v2/region/'.length)
               )
-            )
-            .subscribe((regionData) => {
-              this.regionsLoaded++;
-              this.regions[i]['locationsAmount'] = regionData.locations.length;
-              if (this.regionsLoaded === this.regions.length) {
-                this.regions.forEach((region) => {
-                  this.regionsName.push(region['name']);
-                  this.locationsPerRegionAmount.push(region['locationsAmount']);
-                });
-                this.createRegionsChart();
-              }
-            });
-        }
-      });
+            );
+          });
+          return forkJoin(observables);
+        })
+      )
+      .subscribe(
+        (regions: RegionModel[]) => {
+          regions.forEach((region) => {
+            this.regionsName.push(region.name);
+            this.locationsPerRegionAmount.push(region.locations.length);
+          });
+          this.isRegionsLoaded = true;
+          this.createRegionsChart();
+        },
+        (error) => console.log(error)
+      );
   }
 
   // Método de criação de gráfico de Tipos

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog'; // Biblioteca do elemento Dialog (Modal) do Material
 import { Subscription, forkJoin } from 'rxjs'; // Tipo Subscription para manipulação dos Subscribes (Retorno de Services)
 import { switchMap } from 'rxjs/operators';
-import { tap } from 'rxjs/operators';
 
 import { PokemonDetailsComponent } from './../../../shared/modals/pokemon-details/pokemon-details.component';
 
@@ -42,13 +41,9 @@ export class ListComponent implements OnInit {
     if (this.paginationSubscribe) {
       this.paginationSubscribe.unsubscribe();
     }
-    if (this.pokemonSubscribe) {
-      this.pokemonSubscribe.unsubscribe();
-    }
   }
 
   paginationSubscribe: Subscription;
-  pokemonSubscribe: Subscription;
   // Método de captura de dados de paginação e população de array de Pokémon
   getPokemons(pagination: string): void {
     this.pokedex = null;
@@ -58,6 +53,7 @@ export class ListComponent implements OnInit {
     for (let i = 0; i < 20; i++) {
       this.pokemons.push({ loaded: false, pokemonData: null });
     }
+    // Retornando objeto de paginação de Pokémons
     this.paginationSubscribe = this.pokemonService
       .getPokemons(pagination)
       .pipe(
@@ -73,17 +69,18 @@ export class ListComponent implements OnInit {
               )
             );
           });
+          // Retornando array de subscriptions de Pokémons
           return forkJoin(observables);
         })
       )
       .subscribe((pokemonsData: PokemonModel[]) => {
-        this.isPokemonsLoaded = true;
         pokemonsData.forEach((pokemonData: PokemonModel) => {
           this.pokemons[parseInt(pokemonData.id) - (1 + this.currentOffset)] = {
             loaded: true,
             pokemonData: new PokemonModel().deserialize(pokemonData),
           };
         });
+        this.isPokemonsLoaded = true;
       });
   }
 
@@ -104,7 +101,7 @@ export class ListComponent implements OnInit {
   }
 
   // Método de abertura de modal de Detalhes de Pokémon
-  openPokemonDetails(pokemon): void {
+  openPokemonDetails(pokemon: PokemonModel): void {
     this.pokemonDetailsModal = this.dialog.open(PokemonDetailsComponent, {
       data: {
         pokemon: pokemon,
