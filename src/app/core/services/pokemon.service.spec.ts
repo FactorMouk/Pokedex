@@ -1,4 +1,3 @@
-import { TypeModel } from '../models/type.model';
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
@@ -7,6 +6,7 @@ import { PokemonService } from './pokemon.service';
 
 import { PaginationModel } from '../models/pagination.model';
 import { PokemonModel } from '../models/pokemon/pokemon.model';
+import { TypeModel } from '../models/type/type.model';
 
 describe('PokemonService', () => {
   let httpClientSpy: { get: jasmine.Spy };

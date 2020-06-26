@@ -6,7 +6,7 @@ import { apiUrl } from '../../../environments/environment'; // URL da API
 
 import { PaginationModel } from '../models/pagination.model';
 import { PokemonModel } from '../models/pokemon/pokemon.model';
-import { TypeModel } from '../models/type.model';
+import { TypeModel } from '../models/type/type.model';
 
 @Injectable({
   providedIn: 'root',
